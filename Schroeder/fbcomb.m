@@ -6,6 +6,5 @@ function [y,buff] = fbcomb(x,buff,n,d,G_linear)
     y = buff(delay_idx,1);
     
     %additional: filter y signal with LPF
-
     buff(curr,1) = x + G_linear*y;
 end

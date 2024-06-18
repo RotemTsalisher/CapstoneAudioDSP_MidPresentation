@@ -2,8 +2,8 @@
 clear;clc;
 
 [x,fs] = audioread('hello.wav');
+x = x(:,1);
 N = length(x); Ts = 1/fs; T = N*Ts;
-sound(x,fs); pause(T/8);
 delay_upper_lim = ceil(.07*fs); % upper lim  
 
 % initialize buffs
@@ -37,5 +37,22 @@ for n = 1:N
     [out(n,1),buffer6] = apfilt(w5,buffer6,n,d6,g6);
 end
 
-disp('Done');
+%% Show Spectrograms
+
+M = 128;
+g = hann(M,"periodic");
+L = 0.75*M;
+Ndft = 128;
+
+subplot(211); spectrogram(x,g,L,Ndft,fs,"yaxis"); title("Spectrogram of Original Sig");
+subplot(212); spectrogram(out,g,L,Ndft,fs,"yaxis"); title("Spectrogram of Processed Sig");
+
+%% Play Raw and Processed Sound
+
+sound(x,fs); pause(T);
 sound(out,fs);
+
+%% Save Processed Audio as .wav file
+
+out_ = [out out];
+audiowrite("ReverbedSound.wav", out,fs);

@@ -5,7 +5,6 @@ function [b,a] = calc_bp_coeffs(fc,Gdb,BW, fs)
     Q = fc/BW;
 
     if(Gdb>=0)
-        disp("BP BOOST");
         % boost bp shelving filter coeffs:
 
         v0 = 10^(Gdb/20);
@@ -18,7 +17,6 @@ function [b,a] = calc_bp_coeffs(fc,Gdb,BW, fs)
         a2 = (1 - (1/Q)*k + k^2)/den;
 
     else
-        disp("BP CUT");
         %cut bp shelving filter coeffs:
         v0 = 10^(-Gdb/20);
 

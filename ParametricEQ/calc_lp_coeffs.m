@@ -4,7 +4,6 @@ function [b,a] = calc_lp_coeffs(fc,Gdb, fs)
     k = tan(wc*Ts/2);
 
     if(Gdb>=0)
-        disp("LP BOOST");
         % boost lp shelving filter coeffs:
         v0 = 10^(Gdb/20);
 
@@ -16,13 +15,12 @@ function [b,a] = calc_lp_coeffs(fc,Gdb, fs)
         a2 = (1-sqrt(2)*k+k^2)/den;
 
     else
-        disp("LP CUT");
         %cut hp shelving filter coeffs:
         v0 = 10^(-Gdb/20);
 
         den = 1 + sqrt(2*v0)*k + v0*k^2;
         b0 = (1 + sqrt(2)*k + k^2)/den;
-        b1 = 2*((k^2)-1)/(10*den);
+        b1 = 2*((k^2)-1)/den;
         b2 = (1 - sqrt(2)*k + k^2)/den;
         a1 = 2*(v0*(k^2)-1)/den;
         a2 = (1-sqrt(2*v0)*k+v0*k^2)/den;

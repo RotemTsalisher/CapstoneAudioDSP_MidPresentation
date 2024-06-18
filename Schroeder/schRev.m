@@ -24,20 +24,23 @@ d5 = fix(a*.005*fs); g5 = b*0.7;
 d6 = fix(a*.0017*fs); g6 = b*0.7;
 
 for n = 1:N
-    [w1,buffer1] = fbcomb(x(n,1),buffer1,n,d1,g1);
-    [w2,buffer2] = fbcomb(x(n,1),buffer2,n,d2,g2);
-    [w3,buffer3] = fbcomb(x(n,1),buffer3,n,d3,g3);
-    [w4,buffer4] = fbcomb(x(n,1),buffer4,n,d4,g4);
-
-
-    combPar = 0.25*(w1 + w2 + w3 + w4);
-
-    % all pass
-
-    [w5,buffer5] = apfilt(combPar,buffer5,n,d5,g5);
-    [out(n,1),buffer6] = apfilt(w5,buffer6,n,d6,g6);
+    % [w1,buffer1] = fbcomb(x(n,1),buffer1,n,d1,g1);
+    % [w2,buffer2] = fbcomb(x(n,1),buffer2,n,d2,g2);
+    % [w3,buffer3] = fbcomb(x(n,1),buffer3,n,d3,g3);
+    % [w4,buffer4] = fbcomb(x(n,1),buffer4,n,d4,g4);
+    % 
+    % 
+    % combPar = 0.25*(w1 + w2 + w3 + w4);
+    % 
+    % % all pass
+    % 
+    % [w5,buffer5] = apfilt(combPar,buffer5,n,d5,g5);
+    % [out(n,1),buffer6] = apfilt(w5,buffer6,n,d6,g6);
+    [out(n,1),buffer6] = apfilt(x(n,1),buffer6,n,d6,g6);
 end
 ylim_ = max(abs(out)) + 0.01;
-h = stem(out); grid on; set(h, 'Marker', 'none'); ylim([-ylim_,ylim_]);
-title('Impulse Response of Four FBCF Units Passed Through Two Cascaded AP Filters');
+phase_out = mod(angle(out),360);
+plot(phase_out(1:500)); ylim([-0.1,pi+0.1]);
+% h = stem(out); grid on; set(h, 'Marker', 'none'); ylim([-ylim_,ylim_]);
+% title('Impulse Response of Four FBCF Units Passed Through Two Cascaded AP Filters');
 

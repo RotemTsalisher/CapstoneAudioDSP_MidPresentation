@@ -4,7 +4,6 @@ function [b,a] = calc_hp_coeffs(fc,Gdb, fs)
     k = tan((wc*Ts)/2);
     c_ = sqrt(2);
     if(Gdb>=0)
-        disp("HP BOOST");
         % boost hp shelving filter coeffs:
         v0 = 10^(Gdb/20);
         
@@ -17,7 +16,6 @@ function [b,a] = calc_hp_coeffs(fc,Gdb, fs)
         a2 = (1-c_*k+(k^2))/den;
 
     else
-        disp("HP CUT");
         %cut hp shelving filter coeffs:
         v0 = 10^(-Gdb/20);
 
